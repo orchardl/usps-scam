@@ -1,0 +1,128 @@
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+; #Warn  ; Enable warnings to assist with detecting common errors.
+SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+^j::
+
+;setting up some big arrays...
+
+
+streetNames := ["Blvd Del Perro", "Bridge St", "Brouge Ave", "Buccaneer Way", "Buen Vino Road", "Caesars Place", "Calais Ave", "Capital Blvd", "Carcer Way", "Carson Ave", "Chum St", "Chupacabra St", "Clinton Ave", "Cockingend Dr", "Conquistador St", "Cortes St", "Cougar Ave", "Covenant Ave", "Cox Way", "Crusade Road", "Davis Ave", "Decker St", "Didion Dr", "Dorset Dr", "Dorset Place", "Dry Dock St", "Dunstable Dr", "Dunstable Ln", "Dutch London St", "Eastbourne Way", "East Galileo Ave", "East Mirror Dr", "Eclipse Blvd", "Edwood Way", "Elgin Ave", "El Burro Blvd", "El Rancho Blvd", "Equality Way", "Exceptionalists Way", "Fantastic Place", "Fenwell Place", "Forum Dr", "Fudge Ln", "Galileo Road", "Gentry Ln", "Ginger St", "Glory Way", "Goma St", "Greenwich Pkwy", "Greenwich Place", "Greenwich Way", "Grove St", "Hanger Way", "Hangman Ave", "Hardy Way", "Hawick Ave", "Heritage Way", "Hillcrest Ave", "Hillcrest Ridge Access Road", "Imagination Court", "Industry Passage", "Ineseno Road", "Integrity Way", "Invention Court", "Innocence Blvd", "Jamestown St", "Kimble Hill Dr", "Kortz Dr", "Labor Place", "Laguna Place", "Lake Vinewood Dr", "Las Lagunas Blvd", "Liberty St", "Lindsay Circus", "Little Bighorn Ave", "Low Power St", "Macdonald St", "Mad Wayne Thunder Dr", "Magellan Ave", "Marathon Ave", "Marlowe Dr", "Melanoma St", "Meteor St", "Milton Road", "Mirror Park Blvd", "Mirror Place", "Morningwood Blvd", "Mount Haan Dr", "Mount Haan Road", "Mount Vinewood Dr", "Movie Star Way", "Mutiny Road", "New Empire Way", "Nikola Ave", "Nikola Place", "Normandy Dr", "North Archer Ave", "North Conker Ave", "North Sheldon Ave", "North Rockford Dr", "Occupation Ave", "Orchardville Ave", "Palomino Ave", "Peaceful St", "Perth St", "Picture Perfect Dr", "Plaice Place", "Playa Vista", "Popular St", "Portola Dr", "Power St", "Prosperity St", "Prosperity St Promenade", "Red Desert Ave", "Richman St", "Rockford Dr", "Roy Lowenstein Blvd", "Rub St", "Sam Austin Dr", "San Andreas Ave", "Sandcastle Way", "San Vitus Blvd", "Senora Road", "Shank St", "Signal St", "Sinner St", "Sinners Passage", "South Arsenal St", "South Blvd Del Perro", "South Mo Milton Dr", "South Rockford Dr", "South Shambles St", "Spanish Ave", "Steele Way", "Strangeways Dr", "Strawberry Ave", "Supply St", "Sustancia Road", "Swiss St", "Tackle St", "Tangerine St", "Tongva Dr", "Tower Way", "Tug St", "Utopia Gardens", "Vespucci Blvd", "Vinewood Blvd", "Vinewood Park Dr", "Vitus St", "Voodoo Place", "West Eclipse Blvd", "West Galileo Ave", "West Mirror Dr", "Whispymound Dr", "Wild Oats Dr", "York St", "Zancudo Barranca", "Algonquin Blvd", "Alhambra Dr", "Armadillo Ave", "Baytree Canyon Road", "Calafia Road", "Cascabel Ave", "Cassidy Trail", "Cat-Claw Ave", "Chianski Passage", "Cholla Road", "Cholla Springs Ave", "Duluoz Ave", "East Joshua Road", "Fort Zancudo Approach Road", "Galileo Road", "Grapeseed Ave", "Grapeseed Main St", "Joad Ln", "Joshua Road", "Lesbos Ln", "Lolita Ave", "Marina Dr", "Meringue Ln", "Mount Haan Road", "Mountain View Dr", "Niland Ave", "North Calafia Way", "Nowhere Road", "O Neil Way", "Paleto Blvd", "Panorama Dr", "Procopio Dr", "Procopio Promenade", "Pyrite Ave", "Raton Pass", "Route 68 Approach", "Seaview Road", "Senora Way", "Smoke Tree Road", "Union Road", "Zancudo Ave", "Zancudo Road", "Zancudo Trail", "Zumbro Hills Dr", "45th Manor Ln", "1st St", "2nd St", "3rd St", "4th St", "5th St", "6th St", "7th St", "8th St", "9th St", "1st Ave", "2nd Ave", "3rd Ave", "4th Ave", "5th Ave", "6th Ave", "7th Ave", "8th Ave", "9th Ave", "91st St", "82nd St", "73rd St", "64th St", "55th St", "56th St", "47th St", "38th St", "29th St", "11th Ave", "20th Ave", "30th Ave", "44th Ave", "54th Ave", "64th Ave", "77th Ave", "86th Ave", "96th Ave", "Concord St", "Broad St", "Hospital St", "Macalla Rd"]
+streetNamesL = 242
+
+cityNames := ["New York", "Los Angeles", "Chicago", "Miami", "Dallas", "Philadelphia", "Houston", "Atlanta", "Washington", "Boston", "Phoenix", "Seattle", "San Francisco", "Detroit", "San Diego", "Minneapolis", "Tampa", "Denver", "Brooklyn", "Queens", "Riverside", "Baltimore", "Las Vegas", "Portland", "San Antonio", "St. Louis", "Sacramento", "Orlando", "San Jose", "Cleveland", "Pittsburgh", "Austin", "Cincinnati", "Kansas City", "Manhattan", "Indianapolis", "Columbus", "Charlotte", "Virginia Beach", "Bronx", "Milwaukee", "Providence", "Jacksonville", "Salt Lake City", "Nashville", "Richmond", "Memphis", "Raleigh", "New Orleans", "Louisville", "Oklahoma City", "Bridgeport", "Buffalo", "Fort Worth", "Hartford", "Tucson", "Omaha", "El Paso", "Honolulu", "McAllen", "Albuquerque", "Birmingham", "Sarasota", "Dayton", "Rochester", "Fresno", "Allentown", "Tulsa", "Cape Coral", "Concord", "Colorado Springs", "Charleston", "Springfield", "Grand Rapids", "Mission Viejo", "Albany", "Knoxville", "Bakersfield", "Ogden", "Baton Rouge", "Akron", "New Haven", "Columbia", "Mesa", "Palm Bay", "Provo", "Worcester", "Murrieta", "Greenville", "Wichita", "Toledo", "Staten Island", "Des Moines", "Long Beach", "Port St. Lucie", "Denton", "Madison", "Reno", "Harrisburg", "Little Rock", "Oakland", "Durham", "Winston-Salem", "Bonita Springs", "Indio", "Palm Coast", "Chattanooga", "Spokane", "Syracuse", "Lancaster", "Arlington", "Stockton", "Poughkeepsie", "Augusta", "Boise", "Oxnard", "Scranton", "Modesto", "Kissimmee", "Aurora", "Youngstown", "Fayetteville", "Anaheim", "Pensacola", "Victorville", "Lancaster", "Greensboro", "Corpus Christi", "Fort Wayne", "Santa Ana", "Flint", "Fayetteville", "Jackson", "Santa Rosa", "Lansing", "San Juan", "Lexington", "Ann Arbor", "Henderson", "Huntsville", "Mobile", "Fort Collins", "Asheville", "Santa Clarita", "St. Paul", "Antioch", "Lakeland", "Trenton", "Lincoln", "Springfield", "Anchorage", "Plano", "Irvine", "Davenport", "Rockford", "Newark", "South Bend", "Shreveport", "Round Lake Beach", "Savannah", "Myrtle Beach", "Chula Vista", "Eugene", "Canton", "Lubbock", "Reading", "Winter Haven", "Salem", "St. Petersburg", "Lafayette", "Laredo", "Jersey City", "Concord", "Columbus", "Chandler", "McKinney", "Scottsdale", "Killeen", "Tallahassee", "Peoria", "Wilmington", "Montgomery", "Gilbert", "Glendale", "North Las Vegas", "Chesapeake", "Barnstable", "Norfolk", "Fremont", "Kennewick", "Garland", "Irving", "Visalia", "Atlantic City", "Paradise", "Nashua", "Arlington", "Hialeah", "York", "Evansville", "Avondale", "Brownsville", "Gulfport", "Appleton", "Bremerton", "Hickory", "Tacoma", "San Bernardino", "College Station", "Kalamazoo", "Thousand Oaks", "Roanoke", "Fontana", "Moreno Valley", "North Port", "Fargo", "Green Bay", "Spring Valley", "Amarillo", "Portland", "Santa Barbara", "Gainesville", "Olympia", "Frisco", "Yonkers", "Norwich", "Glendale", "Huntington Beach", "Deltona", "Aurora", "Tempe", "Overland Park", "Grand Prairie", "Sunrise Manor", "Waco", "Salinas", "Waterbury", "Clarksville", "Cedar Rapids", "Sioux Falls", "Huntington", "Ontario"]
+cityNamesL = 242
+
+userNames := ["snowballzclub", "wilsongarbozana", "andrieandcarney", "mariamadrugadal", "familia896543", "dannytootwo2", "facepalm334", "faceplan2", "frankrodney", "frankierodd", "williebon", "flapsjacks2", "reedandco", "ronaldandco", "companyparty336", "seventytwo77", "ninerniner787", "mooremeatplz", "frankiesinatra", "perezfamilia", "familiamadrugal", "familiasanchez236t", "thebdnn", "smithster1", "smoot4565", "joggertothemax", "cantcatchme223", "faceburt33", "john.williams955", "eatmydust978", "jnj123", "bormorg12", "abc9995", "thebigbang999", "rob1bob", "rob2bob", "bigerbanger", "yourmoment234", "sofardar33", "nineteen19", "twelve12", "neverguess99", "brokentooth19", "jackandjill1", "jjnin93", "toothnnail12", "thirteen14", "cortex3", "smaillmail1", "threebirds1", "adamsfamily123", "harrisb1", "stevens1", "robinson1", "lewis123", "shobdo12", "moonstar1", "startsmoon2", "allthesingle9", "niner1niner", "daniellewis", "lindajones", "lisawhite", "andygriffiths1", "corbynblue123", "younger1", "allenjoines1", "wrightlight1", "sandragreen2", "carrietaylor", "smallhall1", "knightlight", "knight1", "coxsox", "paulandrew", "paulandrew1", "joshuacorbin1", "baileysummers1", "brownclown3", "small1wall", "yakessnakes", "zellykelly", "chase1294949", "small3call", "smokes908", "brokenglass9", "greentee2", "smallwallball3", "greensocks9", "wallball1995", "greensocks23", "eatthegreen43", "yakessnakes", "angela0987", "onetwothree333", "peterson998", "pertersberg3", "quailmail3", "ratsnc2"]
+userNamesL = 99
+
+firstNames := ["Jane", "Hannah", "Kathryn", "Maria", "Samuel", "Benjamin", "Frank", "Dale", "Joseph", "Mary", "Jordan", "Jill", "Martin", "Brown", "John", "Robert", "Roy", "Greg", "Karl", "Craig", "Bill", "Venessa", "Jared", "Jack", "Bob", "Steven", "Adam", "Eve", "James", "Michael", "William", "David", "Richard", "Thomas", "Charles", "Christopher", "Daniel", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Nancy", "Lisa", "Betty", "Margaret", "Sandra", "Ashley", "Kimberly", "Emily", "Donna", "Michelle", "Dorothy", "Carol", "Amanda", "Melissa", "Deborah", "Stephanie", "Matthew", "Anthony", "Mark", "Donald", "Paul", "Andrew", "Joshua", "Kenneth", "Kevin", "Brian", "George", "Edward", "Ronald", "Timothy", "Jason", "Jeffrey", "Ryan", "Gary", "Nicholas", "Eric", "Larry", "Justin", "Scott", "Brandon", "Rebecca", "Sharon", "Laura", "Cinthia", "Kathleen", "Amy", "Shirley", "Angela", "Helen", "Anna", "Brenda", "Pamela", "Nicole", "Emma"]
+firstNamesL = 100
+
+lastNames := ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin", "Lee", "Perez", "Thompson", "White", "Harris", "Sanchez", "Clark", "Adams", "Wilson", "Burton", "Harris", "Stevens", "Robinson", "Lewis", "Walker", "Payne", "Baker", "Owen", "Holmes", "Chapman", "Webb", "Allen", "Jones", "Davidson", "Foster", "Matthews", "White", "Griffiths", "Knight", "Corbyn", "Young", "Evans", "Smith", "Wright", "Jenkins", "Green", "Hughes", "Taylor", "Hall", "Anderson", "Armstrong", "Cox", "Atkinson", "Bell", "Carter", "Cole", "Collins", "Dawson", "Bailey", "Ball", "Dixon", "Edwards", "Brown", "Clarke", "Yakes", "Zelly", "Zouch", "Fisher", "Fletcher", "Ford", "Fox", "Gibson", "Grahm", "Grant", "Gray", "Sallow", "Fernsby", "Villin", "Miracle", "Dankworth", "Relish", "Loughty", "Birdwhistle", "Berrycloth", "Palmer", "Peterson", "Quill", "Quintrell", "Ratliff", "Stewart"]
+lastNamesL = 100
+
+creditCards := ["378282246310005", "371449635398431", "378734493671000", "5610591081018250", "6011000990139424", "3530111333300000", "3566002020360505", "5105105105105100", "4012888888881881", "3566111111111113", "6250947000000014", "4916474086308295", "4556089684110649", "4716523237357460", "5321800832925089", "5283570886631166", "5283570886631166", "5465317876202446", "4111111145551142", "4988438843884305", "4166676667666746", "4646464646464644", "4000620000000007", "4000060000000006", "4293189100000008", "4988080000000000", "4444333322221111", "4001590000000001", "4000180000000002", "4000020000000000", "4000160000000004", "4002690000000008", "4400000000000008", "4484600000000004", "4607000000000009", "4131840000000003", "4035501000000008", "4151500000000008", "4571000000000001", "4199350000000002", "4001020000000009", "5555341244441115", "5577000055770004", "5100060000000002"]
+creditCardsL = 44
+
+states := ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
+statesL = 50
+
+emails := ["@gmail.com", "@yahoo.com", "@aol.com", "@hotmail.com", "@outlook.com", "@gmail.com", "@gmail.com"]
+emailsL = 7
+
+
+;begin main
+loop {
+	loop, 10 {
+		; opening 50 new tabs
+		Send, ^+n
+		loop, 50 {
+			Send, https://notifyusp.org/usps/addres
+			Send, {enter}
+			Send, ^t
+		}
+		Send, ^w
+		Send, ^1
+		sleep 13300
+		
+		
+		;entering email address on each tab
+		loop, 50 {
+			Send, `t
+			Random, randun, 1, %userNamesL%
+			Random, randE, 1, %emailsL%
+			Send, % userNames[randun]
+			Send, % emails[randE]
+			Send, `t
+			Random, randad, 1, 9999
+			Random, randst, 1, %streetNamesL%
+			Send, %randad%
+			Send, {space}
+			Send, % streetNames[randst]
+			Send, `t
+			Random, randphone, 2000000000, 9999999999
+			Send, %randphone%
+			Send, `t
+			Random, randfn, 1, firstNamesL
+			Random, randln, 1, lastNamesL
+			Send, % firstNames[randfn]
+			Send, {space}
+			Send, % lastNames[randln]
+			Send, `t
+			Send, `t
+			Random, randcity, 1, %cityNamesL%
+			Send, % cityNames[randcity]
+			Send, `t
+			Random, randstate, 1, %statesL%
+			Send, % states[randstate]
+			Send, `t
+			Random, randzip, 10000, 99999
+			Send, %randzip%
+			Send, `t
+			Send, {enter}
+			Send, ^`t	
+			sleep 150
+		}
+		
+		Send, ^1
+		sleep 150
+		
+		loop, 50 {
+			Send, `t
+			Send, +`t
+			Send, +`t
+			Random, randcv, 100, 999
+			Send, %randcv%
+			Send, +`t
+			Random, randmo, 1, 9
+			Send, 0
+			Send, %randmo%
+			Random, randy, 22, 28
+			Send, %randy%
+			Send, +`t
+			Random, randcc, 1, %creditCardsL%
+			Send, % creditCards[randcc]
+			Send, {enter}
+			Send, ^`t
+			sleep 150
+		}
+		
+		sleep 750
+		
+		;loop, 50 {
+		;	Send, ^`t
+		;	sleep 550
+		;}
+		
+	
+		Send, !{f4}
+		sleep 3500
+		
+	}
+	sleep 30000
+}
+
+Escape::
+ExitApp
+Return
